@@ -1,3 +1,4 @@
+import { UserService } from './service/user.service';
 import { Component } from '@angular/core';
 import { User } from './user';
 import { HttpClient } from '@angular/common/http'
@@ -11,15 +12,15 @@ export class AppComponent {
   users: User[] = [];
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private userService: UserService
   ) {
 
   }
 
   ngOnInit() {
-    this.http.get<{ data: User[] }>('https://reqres.in/api/users').subscribe((res) => {
-      console.log(res);
-      this.users = res.data;
+    this.userService.getUsers().subscribe((res) => {
+      this.users = res;
     })
   }
 }
