@@ -11,7 +11,8 @@ export class UserService {
 
   private usersSubject = new BehaviorSubject<User[]>([]);
 
-  get users$() {
+
+  get users$(): Observable<User[]> {
     return this.usersSubject.asObservable();
   }
 
@@ -22,7 +23,7 @@ export class UserService {
 
   fetchUsers(): void {
     this.http
-    .get<{ data: User[] }>("https://reqres.in/api/users")
+    .get<{ data: User[] }>('https://reqres.in/api/users')
     .pipe(map(res => res.data))
     .subscribe(res => {
       this.usersSubject.next(res);

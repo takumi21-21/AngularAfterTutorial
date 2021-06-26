@@ -15,12 +15,13 @@ export class AppComponent {
   count: any;
 
   countObservable = new Observable(observer => {
+    // tslint:disable-next-line: variable-name
     let _count = 0;
     setInterval(() => {
       _count++;
       observer.next(_count);
-    }, 1000)
-  })
+    }, 1000);
+  });
 
   constructor(
     private http: HttpClient,
@@ -29,7 +30,7 @@ export class AppComponent {
 
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.userService.fetchUsers();
   }
 }

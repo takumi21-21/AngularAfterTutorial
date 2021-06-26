@@ -2,6 +2,11 @@
     "workbench.colorTheme": "Dracula Soft",
     "workbench.preferredDarkColorTheme": "Dracula",
     "workbench.preferredHighContrastColorTheme": "Dracula",
-    "workbench.preferredLightColorTheme": "Dracula"
-   
+    "workbench.preferredLightColorTheme": "Dracula",
+    "workbench.colorCustomizations": {
+
+    },
+    "files.insertFinalNewline": true,
+    "typescript.preferences.quoteStyle": "single"
+
 }
