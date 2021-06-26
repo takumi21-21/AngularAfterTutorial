@@ -2,6 +2,7 @@ import { UserService } from './service/user.service';
 import { Component } from '@angular/core';
 import { User } from './user';
 import { HttpClient } from '@angular/common/http'
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,17 @@ import { HttpClient } from '@angular/common/http'
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  users: User[] = [];
+
+  users = this.userService.users$;
+  count: any;
+
+  countObservable = new Observable(observer => {
+    let _count = 0;
+    setInterval(() => {
+      _count++;
+      observer.next(_count);
+    }, 1000)
+  })
 
   constructor(
     private http: HttpClient,
@@ -19,8 +30,6 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    this.userService.getUsers().subscribe((res) => {
-      this.users = res;
-    })
+    this.userService.fetchUsers();
   }
 }

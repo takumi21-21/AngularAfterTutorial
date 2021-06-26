@@ -1,7 +1,7 @@
 import { User } from './../user';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators'
 
 @Injectable({
@@ -9,16 +9,23 @@ import { map } from 'rxjs/operators'
 })
 export class UserService {
 
+  private usersSubject = new BehaviorSubject<User[]>([]);
+
+  get users$() {
+    return this.usersSubject.asObservable();
+  }
+
   constructor(
     private http: HttpClient
   ) { }
 
-  public getUsers(): Observable<User[]> {
-    return this.http.get<{ data: User[] }>("https://reqres.in/api/users")
-    .pipe(
-      map(res => res.data)
-    );
+
+  fetchUsers(): void {
+    this.http
+    .get<{ data: User[] }>("https://reqres.in/api/users")
+    .pipe(map(res => res.data))
+    .subscribe(res => {
+      this.usersSubject.next(res);
+    })
   }
-
-
 }
